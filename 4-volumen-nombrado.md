@@ -6,8 +6,8 @@ Un volumen nombrado (named volume) es un tipo de volumen gestionado por Docker q
 ```
 docker volume create <nombre volumen>
 ```
-
 ### Crear el volumen nombrado: vol-postgres
+docker volume create vol-postgres
 # COMPLETAR CON EL COMANDO
 
 ## MOUNTPOINT
@@ -39,6 +39,7 @@ docker run -d --name <nombre contenedor> --mount type=volume,src=<nombre >,dst=<
 
 
 ### Crear la red net-drupal de tipo bridge
+docker network create --driver bridge net-drupal
 # COMPLETAR CON EL COMANDO
 
 ### Crear un servidor postgres vinculado a la red net-drupal, completar la ruta del contenedor
@@ -55,6 +56,20 @@ docker run -d --name client-postgres --publish published=9500,target=80 -e PGADM
 ### Usar el cliente postgres para conectarse al servidor postgres, para la conexión usar el nombre del servidor en lugar de la dirección IP.
 
 ### Crear los volúmenes necesarios para drupal, esto se puede encontrar en la documentación
+Servidor Postgres con el volumen (la ruta del contenedor es /var/lib/postgresql/data):
+docker run -d --name server-postgres -e POSTGRES_DB=db_drupal -e POSTGRES_PASSWORD=12345 -e POSTGRES_USER=user_drupal -v vol-postgres:/var/lib/postgresql/data --network net-drupal postgres
+
+Cliente pgAdmin (el correo debe tener formato válido):
+docker run -d --name client-postgres --publish published=9500,target=80 -e PGADMIN_DEFAULT_PASSWORD=54321 -e PGADMIN_DEFAULT_EMAIL=admin@example.com --network net-drupal dpage/pgadmin4
+
+Volumenes:
+docker volume create vol-drupal-modules
+docker volume create vol-drupal-profiles
+docker volume create vol-drupal-themes
+docker volume create vol-drupal-sites
+
+Contenedor server-drupal:
+docker run -d --name server-drupal --publish published=9700,target=80 -v vol-drupal-modules:/var/www/html/modules -v vol-drupal-profiles:/var/www/html/profiles -v vol-drupal-themes:/var/www/html/themes -v vol-drupal-sites:/var/www/html/sites --network net-drupal drupal
 ### COMPLETAR CON LOS COMANDOS
 
 ### Crear el contenedor server-drupal vinculado a la red, usar la imagen drupal, y vincularlo a los volúmenes nombrados
@@ -63,6 +78,9 @@ docker run -d --name server-drupal --publish published=9700,target=80 -v <nombre
 ```
 
 ### Ingrese al server-drupal y siga el paso a paso para la instalación.
+
+<img width="1280" height="800" alt="image" src="https://github.com/user-attachments/assets/bdf78d4e-ae59-48e2-9c0a-5e8e461f6c1a" />
+
 # COMPLETAR CON UNA CAPTURA DE PANTALLA DEL PASO 4
 
 _La instalación puede tomar varios minutos, mientras espera realice un diagrama de los contenedores que ha creado en este apartado._
