@@ -1,4 +1,4 @@
-## VOLUMEN NOMBRADO
+j## VOLUMEN NOMBRADO
 Un volumen nombrado (named volume) es un tipo de volumen gestionado por Docker que se almacena en una ubicación específica del sistema de archivos del host y se identifica mediante un nombre único. Los volúmenes nombrados no requieren que especifiques una ruta del sistema de archivos del host, y en su lugar, Docker se encarga de la gestión y el almacenamiento del volumen.
 
 
@@ -84,6 +84,9 @@ docker run -d --name server-drupal --publish published=9700,target=80 -v <nombre
 # COMPLETAR CON UNA CAPTURA DE PANTALLA DEL PASO 4
 
 _La instalación puede tomar varios minutos, mientras espera realice un diagrama de los contenedores que ha creado en este apartado._
+
+<img width="1600" height="723" alt="Diagrama" src="https://github.com/user-attachments/assets/958ee6d2-45d9-4f9a-a022-c80595c623df" />
+
 
 # COMPLETAR CON EL DIAGRAMA SOLICITADO
 
